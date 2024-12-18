@@ -8,19 +8,17 @@ import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 export default function ConversorCripto() {
-    const [ValorMoedaNaCompra, setValorMoedaNaCompra] = useState<number>()
-    const [valorInvestido, setValorInvestido] = useState<number>()
+    const [ValorMoedaNaCompra, setValorMoedaNaCompra] = useState<string>()
+    const [valorInvestido, setValorInvestido] = useState<string>()
     const [criptoSelecionada, setCriptoSelecionada] = useState<string>('custonCoin')
     const [valorFinal, setValorFinal] = useState<number | null>(null)
 
     const calcularQuantidade = (): number => {
-        if(!ValorMoedaNaCompra || !valorInvestido){
-            throw new Error("Informe valores validos.");
-        }
-        if (ValorMoedaNaCompra <= 0 || valorInvestido <= 0) {
+
+        if (Number(ValorMoedaNaCompra) <= 0 || Number(valorInvestido) <= 0) {
             throw new Error("Os valores devem ser maiores que zero.");
         }
-        return valorInvestido / ValorMoedaNaCompra;
+        return Number(valorInvestido) / Number(ValorMoedaNaCompra);
     }
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -54,7 +52,6 @@ export default function ConversorCripto() {
                         <Input
                             id="ValorMoedaNaCompra"
                             type="number"
-                            min={0}
                             value={ValorMoedaNaCompra}
                             onChange={(e) => setValorMoedaNaCompra(e.target.value)}
                             placeholder="Ex: 50000"
@@ -66,7 +63,6 @@ export default function ConversorCripto() {
                         <Input
                             id="valorInvestido"
                             type="number"
-                            min={0}
                             value={valorInvestido}
                             onChange={(e) => setValorInvestido(e.target.value)}
                             placeholder="Ex: 0.5"
